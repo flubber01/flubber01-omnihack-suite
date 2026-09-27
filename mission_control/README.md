@@ -51,11 +51,22 @@ One server, three views — open two of them and drag one to your second display
 | 🎬 Content Automation | wizard + **5 pre-configured pipeline presets**, one-click autopilot, planner |
 | 📡 Social Connectors | X/YouTube/TikTok/Spotify/Instagram/Facebook vaults · **4 seeded personas** (ALEX/MIA/LEON/SARA) · daemons |
 | 🔬 Skill Lab | 202 stubbed skills, fuzzy search, fuse/strip onto agents |
+| 🧠 Memory & Learning | **SQLite memory vault**, remember loop, lessons, self-improvement score |
 | 💻 SSH Terminal | paramiko shell (blank host → sandbox), quick-ops |
 | 🗺️ Workflows & Connectors | node sequencer, GitHub + Azure, **n8n · Kaggle · Gmail · Slack · Discord · Notion · OpenAI · Zapier · HuggingFace · Stripe**, 4 shipped blueprint pipelines |
 | 🔌 Hardware Hub | GPU/edge/NAS matrix, docker fleet, power telemetry |
 | 📊 System Logs | 2000-event ring buffer, level filter |
 | ⚙️ Settings & Config | **3 HUD skins**, **UI cleanup toggles** (hide unused controls), **Telegram bridge**, config.json export/import |
+
+## 🧠 Memory & Self-Improvement
+
+* **SQLite vault** (`data/omni_memory.db`): episodic / procedural / semantic /
+  feedback memories — filled automatically by swarm chat, content autopilot
+  and every skill execution.
+* **Remember Loop**: background thread that snapshots telemetry, consolidates
+  raw memories into reusable **lessons** and grows an **improvement score** —
+  arm it in the 🧠 tab (or run a cycle manually).
+* **Recall**: keyword-scored semantic search per agent/kind.
 
 ## 🎨 HUD skins (live-switchable)
 

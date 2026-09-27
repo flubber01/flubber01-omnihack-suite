@@ -19,8 +19,14 @@ def _ensure_data_dir() -> None:
 def export_config() -> Tuple[str, str]:
     """Write full mission state to config.json; return (path, summary)."""
     _ensure_data_dir()
+    try:
+        from .memory import MEMORY
+        memory_stats = MEMORY.stats()
+    except Exception:
+        memory_stats = {"memories": 0, "lessons": 0}
     payload: Dict[str, Any] = {
-        "meta": {"app": "OMNIHACK MISSION CONTROL", "version": "1.0.0"},
+        "meta": {"app": "OMNIHACK MISSION CONTROL", "version": "2.2.0",
+                 "memory": memory_stats},
         "ollama_url": STATE.ollama_url,
         "hf_models": STATE.hf_models,
         "agents": STATE.agents,

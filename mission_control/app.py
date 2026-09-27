@@ -18,9 +18,9 @@ from .core.persistence import load_persisted
 from .core.state import STATE, seed_static_data
 from .core.theme import CSS, build_theme, launch_css, skin_style_block
 from .ui import (agents_tab, browser_tab, content_tab, hardware_tab,
-                  helpbot, logs_tab, screens, settings_tab, skill_lab_tab,
-                  social_tab, ssh_tab, swarm_ops, topbar, visibility as vis,
-                  workflow_tab)
+                  helpbot, logs_tab, memory_tab, screens, settings_tab,
+                  skill_lab_tab, social_tab, ssh_tab, swarm_ops, topbar,
+                  visibility as vis, workflow_tab)
 
 # Boot-time seeding so every dropdown is populated from the first frame.
 swarm.seed_swarm()
@@ -74,6 +74,8 @@ def build_main() -> gr.Blocks:
                 social_tab.render()
             with gr.Tab("🔬 Skill Lab", id="skills"):
                 skill_lab_tab.render(ops["ops_table"])
+            with gr.Tab("🧠 Memory & Learning", id="memory"):
+                memory_tab.render()
             with gr.Tab("💻 SSH Terminal", id="ssh"):
                 ssh_tab.render()
             with gr.Tab("🗺️ Workflows & Connectors", id="workflow"):

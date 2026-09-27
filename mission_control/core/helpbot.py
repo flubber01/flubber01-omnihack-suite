@@ -198,6 +198,21 @@ GUIDES: Dict[str, Dict[str, object]] = {
             "3. **✅ RE-ARM SWARM** restores everything.",
         ],
     },
+    "memory": {
+        "title": "🧠 MEMORY & LEARNING",
+        "steps": [
+            "Guide: making the swarm remember and improve.",
+            "1. Open **🧠 Memory & Learning** — everything is stored in a SQLite vault "
+            "(`mission_control/data/omni_memory.db`).",
+            "2. Memories are collected automatically: swarm chat, content autopilot runs "
+            "and every skill execution.",
+            "3. Hit **🔁 ARM LOOP** — the Remember Loop consolidates raw memories into "
+            "reusable lessons every cycle and raises the improvement score.",
+            "4. Use **RECALL** to search the vault (keyword scoring per agent/kind).",
+            "5. Check LESSONS LEARNED — confidence grows when a lesson is re-derived. "
+            "That is the self-improvement curve.",
+        ],
+    },
 }
 
 KEYWORDS = {
@@ -221,6 +236,9 @@ KEYWORDS = {
     "screens": ["screen", "monitor", "dual", "zweit", "second", "wall", "/ops"],
     "install": ["install", "installation", "deploy", "bash", "curl", "einzeiler"],
     "kill": ["kill", "notfall", "emergency", "stop", "halt"],
+    "memory": ["memory", "gedächtnis", "remember", "lernen", "learning",
+                "verbessern", "improve", "datenbank", "database", "sqlite",
+                "lesson", "erinnerung"],
 }
 
 TOPIC_ALIASES = {num: topic for num, topic in enumerate(GUIDES, 1)}

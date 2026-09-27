@@ -199,6 +199,15 @@ class ContentPipeline:
         self.generate_voiceover(job["id"], voice)
         self.render(job["id"])
         post = self.distribute(job["id"])
+        # 🧠 procedural memory: how the factory executed this run
+        try:
+            from .memory import MEMORY
+            MEMORY.store(profile or "FACTORY",
+                         f"autopilot render '{topic}' ({length}s, {tone}) → posted to "
+                         f"{', '.join(p['platform'] for p in post.get('posts', []))}",
+                         kind="procedural", importance=8)
+        except Exception:
+            pass
         return {"ok": True, "job": job, "posts": post.get("posts", [])}
 
 

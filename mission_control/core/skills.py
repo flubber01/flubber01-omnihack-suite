@@ -52,17 +52,28 @@ def _register(domain: str, slug: str, name: str, desc: str,
     return sid
 
 
-def execute_skill(skill_id: str, **params: Any) -> Dict[str, Any]:
-    """Run a skill by id; unknown ids return a failure receipt."""
+def execute_skill(skill_id: str, agent: str = "—", **params: Any) -> Dict[str, Any]:
+    """Run a skill by id; unknown ids return a failure receipt.
+
+    Every execution is logged into the memory vault (skill_feedback)
+    so the remember loop can learn which capabilities run hot/cold.
+    """
     skill = SKILL_REGISTRY.get(skill_id)
     if skill is None:
         return {"skill_id": skill_id, "status": "NOT_FOUND", "exit_code": 127,
                 "output": f"Skill '{skill_id}' is not registered."}
     try:
-        return skill["handler"](**params)
+        receipt = skill["handler"](**params)
     except Exception as exc:  # never let a stubbed skill crash the UI
-        return {"skill_id": skill_id, "status": "SIMULATED_ERROR", "exit_code": 1,
-                "output": f"{skill['name']} raised: {exc}"}
+        receipt = {"skill_id": skill_id, "status": "SIMULATED_ERROR", "exit_code": 1,
+                   "runtime_ms": 0, "output": f"{skill['name']} raised: {exc}"}
+    try:  # 🧠 feed the memory vault
+        from .memory import MEMORY
+        MEMORY.record_skill(skill_id, agent, receipt.get("runtime_ms", 0),
+                            receipt.get("exit_code", 1) == 0)
+    except Exception:
+        pass
+    return receipt
 
 
 def search_skills(query: str = "", domain: str = "ALL") -> List[str]:

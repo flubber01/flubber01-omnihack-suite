@@ -12,12 +12,19 @@ from ..core.state import STATE
 
 # ------------------------------------------------------------------ handlers
 def send_to_swarm(history, text, target):
+    from ..core.memory import MEMORY
     text = (text or "").strip()
     if not text:
         yield history, gr.skip()
         return
+    baseline = len(history)
     for h in swarm.swarm_chat_stream(history, text, target):
         yield h, gr.skip()
+    # 🧠 feed the memory vault: directive + every agent reaction
+    MEMORY.store("OPERATOR", f"[{target}] {text}", kind="episodic", importance=7)
+    for entry in history[baseline + 1:]:
+        who = (entry.get("metadata") or {}).get("title", "AGENT").split(" · ")[0]
+        MEMORY.store(who, entry.get("content", "")[:400], kind="episodic", importance=5)
     yield history, activity_feed()
 
 
