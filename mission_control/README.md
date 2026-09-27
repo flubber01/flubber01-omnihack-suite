@@ -12,15 +12,23 @@ app runs natively with zero credentials.
 
 ## 🚀 One-shot install (single bash command)
 
-```bash
-# inside a clone:
-bash install.sh
+Paste this **one line** on any Linux VPS — clones, installs, launches:
 
-# fully remote (clones the repo for you):
-bash <(curl -fsSL https://raw.githubusercontent.com/flubber01/flubber01-omnihack-suite/arena/01a0e419-flubber01-omnihack-suite/install.sh)
+```bash
+git clone --depth 1 -b arena/01a0e419-flubber01-omnihack-suite https://github.com/flubber01/flubber01-omnihack-suite.git omnihack && bash omnihack/install.sh
 ```
 
-Manual: `pip install -r requirements.txt && python run_mission_control.py`
+(inside an existing clone simply `bash install.sh`; `--no-launch` installs only,
+`OMNI_PORT=8080` changes the port). Manual: `pip install -r requirements.txt &&
+python run_mission_control.py`
+
+## 🤖 Floating Help Bot
+
+A site-style assistant lives bottom-right on every console. It guides setup
+conversationally, step by step: type a keyword (`ollama`, `telegram`, `video`,
+`agents`, `install` …) or `topics` for the list, `next` to advance a guide,
+a number to jump to a topic. Hide it via **✕ HIDE** on the widget or
+permanently via **⚙️ Settings ▸ UI Cleanup ▸ Help Bot** toggle.
 
 ## 🖥️ Multi-Screen Mode (2 monitors)
 

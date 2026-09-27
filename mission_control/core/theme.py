@@ -303,6 +303,24 @@ CSS = """
   border-top: 1px solid var(--nx-grid); padding-top: 6px; margin-top: 8px;
 }
 .gradio-container .block { border-radius: 2px; }
+
+/* ---------- floating help bot ---------- */
+.helpbot-float {
+  position: fixed !important; right: 18px; bottom: 18px; z-index: 690;
+  width: 400px; max-height: 78vh;
+  border: 1px solid var(--nx-accent) !important;
+  background: rgba(6, 12, 9, 0.96) !important;
+  box-shadow: 0 0 26px var(--nx-glow-a), inset 0 0 24px rgba(0, 0, 0, 0.4);
+  padding: 8px 10px !important;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+.helpbot-float .helpbot-chatbot, .helpbot-float .helpbot-chat { height: 300px; }
+.helpbot-float textarea {
+  background: #050b08 !important; border: 1px solid var(--nx-grid) !important;
+}
+@media (max-width: 900px) {
+  .helpbot-float { width: calc(100vw - 36px); }
+}
 """
 
 
