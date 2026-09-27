@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Mission Control runtime artifacts (persisted vaults stay under version control policy)
+mission_control/data/
+*.log
+
+# Node
+node_modules/
+.next/
