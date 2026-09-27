@@ -51,9 +51,9 @@ One server, three views — open two of them and drag one to your second display
 
 ## 🎨 HUD skins (live-switchable)
 
-* **JARVIS** — holographic Stark HUD, cyan/gold (default)
+* **MILITARY OPS** — olive/amber stencil console (default)
+* **JARVIS** — holographic Stark HUD, cyan/gold
 * **CYBERPUNK** — matrix green/magenta
-* **MILITARY OPS** — olive/amber stencil console
 
 ## 📱 Telegram control
 

@@ -16,6 +16,23 @@ import gradio as gr
 # Skin palettes (CSS custom properties)
 # ---------------------------------------------------------------------------
 SKINS: dict[str, dict[str, str]] = {
+    "MILITARY OPS": {
+        "--nx-bg": "#07080a",
+        "--nx-bg2": "#0c0e08",
+        "--nx-panel": "#0d1109",
+        "--nx-panel2": "#131a0e",
+        "--nx-grid": "#26301c",
+        "--nx-accent": "#ffb300",
+        "--nx-accent2": "#9acd32",
+        "--nx-good": "#9acd32",
+        "--nx-warn": "#ffb300",
+        "--nx-danger": "#ff5533",
+        "--nx-text": "#e8e6cf",
+        "--nx-dim": "#7d7f66",
+        "--nx-glow-a": "rgba(255, 179, 0, 0.5)",
+        "--nx-glow-b": "rgba(154, 205, 50, 0.4)",
+        "--nx-font": "'Share Tech Mono', 'JetBrains Mono', monospace",
+    },
     "JARVIS": {
         "--nx-bg": "#020a12",
         "--nx-bg2": "#041220",
@@ -50,26 +67,9 @@ SKINS: dict[str, dict[str, str]] = {
         "--nx-glow-b": "rgba(255, 43, 214, 0.45)",
         "--nx-font": "'JetBrains Mono', monospace",
     },
-    "MILITARY OPS": {
-        "--nx-bg": "#07080a",
-        "--nx-bg2": "#0c0e08",
-        "--nx-panel": "#0d1109",
-        "--nx-panel2": "#131a0e",
-        "--nx-grid": "#26301c",
-        "--nx-accent": "#ffb300",
-        "--nx-accent2": "#9acd32",
-        "--nx-good": "#9acd32",
-        "--nx-warn": "#ffb300",
-        "--nx-danger": "#ff5533",
-        "--nx-text": "#e8e6cf",
-        "--nx-dim": "#7d7f66",
-        "--nx-glow-a": "rgba(255, 179, 0, 0.5)",
-        "--nx-glow-b": "rgba(154, 205, 50, 0.4)",
-        "--nx-font": "'Share Tech Mono', 'JetBrains Mono', monospace",
-    },
 }
 SKIN_NAMES = list(SKINS.keys())
-DEFAULT_SKIN = "JARVIS"
+DEFAULT_SKIN = "MILITARY OPS"
 
 
 def skin_vars(name: str) -> str:
@@ -83,44 +83,45 @@ def skin_style_block(name: str) -> str:
 
 
 def build_theme() -> gr.Theme:
-    """Neutral dark theme — skins layer the real personality on top."""
+    """Neutral dark theme tuned for the MILITARY OPS default skin —
+    skins layer the real personality on top via CSS variables."""
     theme = gr.themes.Base(
-        primary_hue=gr.themes.colors.cyan,
-        secondary_hue=gr.themes.colors.amber,
-        neutral_hue=gr.themes.colors.slate,
-        font=gr.themes.GoogleFont("Rajdhani"),
+        primary_hue=gr.themes.colors.amber,
+        secondary_hue=gr.themes.colors.lime,
+        neutral_hue=gr.themes.colors.stone,
+        font=gr.themes.GoogleFont("Share Tech Mono"),
         font_mono=gr.themes.GoogleFont("JetBrains Mono"),
     )
     variables = dict(
-        body_background_fill="#04080d",
-        body_text_color="#cdeeff",
-        block_background_fill="#071524",
-        block_border_color="#0b2a3d",
+        body_background_fill="#07080a",
+        body_text_color="#e8e6cf",
+        block_background_fill="#0d1109",
+        block_border_color="#26301c",
         block_border_width="1px",
-        block_label_background_fill="linear-gradient(90deg, #061524 0%, #0a1f33 100%)",
-        block_label_text_color="#35d6ff",
-        block_title_text_color="#35d6ff",
-        block_shadow="0 0 18px rgba(53, 214, 255, 0.06)",
-        button_primary_background_fill="linear-gradient(135deg, #0e7ea6 0%, #35d6ff 140%)",
-        button_primary_background_fill_hover="linear-gradient(135deg, #35d6ff 0%, #9ae9ff 120%)",
-        button_primary_text_color="#02131c",
-        button_secondary_background_fill="linear-gradient(135deg, #0a1f33 0%, #12324d 100%)",
-        button_secondary_background_fill_hover="linear-gradient(135deg, #12324d 0%, #1a4468 100%)",
-        button_secondary_text_color="#bde6ff",
-        button_cancel_background_fill="linear-gradient(135deg, #5c0f22 0%, #c11b3d 120%)",
-        button_cancel_text_color="#ffe3ea",
-        input_background_fill="#04101c",
-        input_border_color="#0b2a3d",
-        input_border_color_focus="#35d6ff",
-        border_color_primary="#0b2a3d",
-        background_fill_primary="#04080d",
-        background_fill_secondary="#071524",
-        table_border_color="#0b2a3d",
-        table_even_background_fill="#061120",
-        table_odd_background_fill="#0a1826",
-        checkbox_background_color="#04101c",
-        checkbox_background_color_selected="#0e7ea6",
-        shadow_drop="0 0 22px rgba(53,214,255,0.10)",
+        block_label_background_fill="linear-gradient(90deg, #0d1109 0%, #131a0e 100%)",
+        block_label_text_color="#ffb300",
+        block_title_text_color="#ffb300",
+        block_shadow="0 0 18px rgba(255, 179, 0, 0.06)",
+        button_primary_background_fill="linear-gradient(135deg, #7a5600 0%, #ffb300 140%)",
+        button_primary_background_fill_hover="linear-gradient(135deg, #ffb300 0%, #ffd66b 120%)",
+        button_primary_text_color="#1c1402",
+        button_secondary_background_fill="linear-gradient(135deg, #131a0e 0%, #23301a 100%)",
+        button_secondary_background_fill_hover="linear-gradient(135deg, #23301a 0%, #33452a 100%)",
+        button_secondary_text_color="#d6e6b8",
+        button_cancel_background_fill="linear-gradient(135deg, #5c1a06 0%, #ff5533 120%)",
+        button_cancel_text_color="#ffe8e3",
+        input_background_fill="#0c0e08",
+        input_border_color="#26301c",
+        input_border_color_focus="#ffb300",
+        border_color_primary="#26301c",
+        background_fill_primary="#07080a",
+        background_fill_secondary="#0d1109",
+        table_border_color="#26301c",
+        table_even_background_fill="#0b0d08",
+        table_odd_background_fill="#10140b",
+        checkbox_background_color="#0c0e08",
+        checkbox_background_color_selected="#7a5600",
+        shadow_drop="0 0 22px rgba(255,179,0,0.10)",
     )
     for key, value in variables.items():
         try:

@@ -128,7 +128,7 @@ class SwarmState:
         self.pipeline_runs: List[Dict[str, Any]] = []
 
         # UI configuration ------------------------------------------------------
-        self.skin: str = "JARVIS"
+        self.skin: str = "MILITARY OPS"
         self.ui_flags: Dict[str, bool] = {}
 
         # hardware ----------------------------------------------------------------
