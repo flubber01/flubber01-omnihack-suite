@@ -7,7 +7,7 @@ import random
 import gradio as gr
 
 from ..core.persistence import save_connectors, save_profiles
-from ..core.state import STATE, uid
+from ..core.state import STATE
 from . import visibility as vis
 
 PLATFORMS = ["Twitter (X)", "YouTube", "TikTok", "Spotify", "Instagram", "Facebook"]

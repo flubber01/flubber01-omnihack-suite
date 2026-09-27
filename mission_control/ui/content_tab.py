@@ -6,7 +6,6 @@ import time
 
 import gradio as gr
 
-from ..core import swarm
 from ..core.pipeline import PIPELINE, PLATFORMS, TONES, VOICES
 from ..core.state import STATE
 from . import visibility as vis

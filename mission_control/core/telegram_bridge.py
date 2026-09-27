@@ -125,6 +125,9 @@ class TelegramBridge:
 
     # --------------------------------------------------------------- handlers
     def handle(self, text: str) -> str:
+        text = (text or "").strip()
+        if not text:
+            return HELP_TEXT
         parts = text.split(maxsplit=2)
         cmd = parts[0].lower().split("@")[0]
 

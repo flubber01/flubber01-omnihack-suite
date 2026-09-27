@@ -8,8 +8,7 @@ call-site (stubbed execution) so swapping in a render farm is trivial.
 from __future__ import annotations
 
 import random
-import time
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from .state import STATE, now_iso, uid
 
@@ -137,7 +136,6 @@ class ContentPipeline:
             return {"ok": False, "error": "unknown job"}
         task = {"id": uid("rnd"), "job": job_id, "status": "RENDERING", "progress": 0}
         STATE.render_tasks[task["id"]] = task
-        rnd = random.Random(job_id + "render")
         cmd = ("ffmpeg -y -f concat -safe 0 -i clips.txt "
                f"-i {job['voiceover'].get('file', 'vo.wav')} "
                "-vf scale=1080:1920 -c:v libx264 -preset veryfast -c:a aac "

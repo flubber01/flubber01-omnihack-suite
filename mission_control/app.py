@@ -16,7 +16,7 @@ import gradio as gr
 from .core import swarm
 from .core.persistence import load_persisted
 from .core.state import STATE, seed_static_data
-from .core.theme import CSS, build_theme, launch_css, skin_style_block
+from .core.theme import build_theme, launch_css, skin_style_block
 from .ui import (agents_tab, browser_tab, content_tab, hardware_tab,
                   helpbot, logs_tab, memory_tab, screens, settings_tab,
                   skill_lab_tab, social_tab, ssh_tab, swarm_ops, topbar,

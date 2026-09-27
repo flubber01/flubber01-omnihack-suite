@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 import time
-from typing import Any, Dict, Generator, List, Optional, Tuple
+from typing import Any, Dict, Generator, List, Optional
 
 from .state import STATE, now_iso, uid
 

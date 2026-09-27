@@ -146,5 +146,6 @@ def render(skin_holder: gr.HTML) -> dict:
     timer = gr.Timer(6.0)
     timer.tick(skin_payload, outputs=[skin_holder])
     timer.tick(tg_status, outputs=[tg_msg])
+    timer.tick(tg_test_log, outputs=[tg_log])
 
     return {"cb_container": cb_container, "skin_holder": skin_holder}
