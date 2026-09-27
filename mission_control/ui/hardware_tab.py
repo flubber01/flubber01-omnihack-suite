@@ -5,6 +5,7 @@ from __future__ import annotations
 import gradio as gr
 
 from ..core.state import STATE
+from . import visibility as vis
 
 
 def device_rows():
@@ -78,8 +79,10 @@ def render() -> dict:
                                         value=list(STATE.hardware.keys())[0],
                                         label="DEVICE")
                 toggle_btn = gr.Button("⏻ TOGGLE POWER", variant="secondary")
-            load_slider = gr.Slider(0, 100, value=50, step=1, label="SET LOAD %")
-            load_btn = gr.Button("⚙ APPLY LOAD", variant="primary")
+            with gr.Row() as load_row:
+                load_slider = gr.Slider(0, 100, value=50, step=1, label="SET LOAD %")
+                load_btn = gr.Button("⚙ APPLY LOAD", variant="primary")
+            vis.register("hardware.load", load_row, "Hardware: load-tuning row")
             dev_msg = gr.Markdown("")
             power_md = gr.Markdown(power_summary, elem_classes="cyber-panel")
         with gr.Column(scale=5):

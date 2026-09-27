@@ -8,6 +8,7 @@ import gradio as gr
 
 from ..core.persistence import save_connectors, save_profiles
 from ..core.state import STATE, uid
+from . import visibility as vis
 
 PLATFORMS = ["Twitter (X)", "YouTube", "TikTok", "Spotify", "Instagram", "Facebook"]
 _RND = random.Random(77)
@@ -137,7 +138,9 @@ def render() -> dict:
                                           placeholder="https://vps.example/hooks/…")
             with gr.Row():
                 save_conn = gr.Button("💾 SAVE CONNECTOR", variant="primary")
-                test_conn = gr.Button("🧪 TEST HANDSHAKE", variant="secondary")
+                test_conn = gr.Button("🧪 TEST HANDSHAKE", variant="secondary",
+                                       elem_id="btn-social-test")
+            vis.register("social.test", test_conn, "Social: test-handshake button")
             conn_msg = gr.Markdown("")
 
         # -------------------------------------------------------- profiles

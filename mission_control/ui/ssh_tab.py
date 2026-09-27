@@ -6,6 +6,7 @@ import gradio as gr
 
 from ..core.ssh_terminal import SSH
 from ..core.state import STATE
+from . import visibility as vis
 
 
 def connect(host, port, user, password, key):
@@ -69,7 +70,7 @@ def render() -> dict:
                                   placeholder="type a command and hit ENTER",
                                   scale=7, elem_classes="term-input")
                 run_btn = gr.Button("⏎ EXECUTE", variant="primary", scale=1)
-            with gr.Row():
+            with gr.Row() as quick_row:
                 q1 = gr.Button("uname -a", size="sm")
                 q2 = gr.Button("df -h", size="sm")
                 q3 = gr.Button("top snapshot", size="sm")
@@ -77,6 +78,7 @@ def render() -> dict:
                 q5 = gr.Button("nvidia-smi", size="sm")
                 q6 = gr.Button("docker ps", size="sm")
                 clear_btn = gr.Button("🧹 CLEAR", size="sm", variant="stop")
+            vis.register("ssh.quickops", quick_row, "SSH: quick-op button row")
 
     conn_btn.click(connect, inputs=[host, port, user, password, key],
                    outputs=[screen, conn_status])

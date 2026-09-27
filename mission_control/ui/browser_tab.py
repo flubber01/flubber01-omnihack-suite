@@ -7,6 +7,7 @@ import gradio as gr
 from ..core import browser as br
 from ..core.ollama import ENGINE
 from ..core.state import STATE
+from . import visibility as vis
 
 CLICK_JS = """
 <div id="bc-capture"
@@ -139,11 +140,13 @@ def render() -> dict:
                 go_btn = gr.Button("🌐 GO", variant="primary", scale=1)
                 snap_btn = gr.Button("📸 FRAME", variant="secondary", scale=1)
             with gr.Row():
-                scroll_dd = gr.Slider(-600, 600, value=240, step=20, label="SCROLL Δy (px)")
-                scroll_btn = gr.Button("📜 SCROLL", variant="secondary")
-                fps = gr.Slider(0.2, 5.0, value=1.0, step=0.2, label="STREAM FPS")
                 start_btn = gr.Button("🔴 START STREAM", variant="primary")
                 stop_btn = gr.Button("⏸ PAUSE", variant="stop")
+                fps = gr.Slider(0.2, 5.0, value=1.0, step=0.2, label="STREAM FPS")
+            with gr.Row() as scroll_row:
+                scroll_dd = gr.Slider(-600, 600, value=240, step=20, label="SCROLL Δy (px)")
+                scroll_btn = gr.Button("📜 SCROLL", variant="secondary")
+            vis.register("browser.scroll", scroll_row, "Browser: scroll controls")
             stream_msg = gr.Markdown("🟢 Remote browser attached :: stealth profile ACTIVE.")
             # VNC fallback pane (hidden until mode switched)
             vnc_url = gr.Textbox(value="http://localhost:6080/vnc.html?autoconnect=true",

@@ -9,10 +9,48 @@ import gradio as gr
 from ..core import swarm
 from ..core.pipeline import PIPELINE, PLATFORMS, TONES, VOICES
 from ..core.state import STATE
+from . import visibility as vis
 
 
 def _profile_names():
     return list(STATE.profiles.keys()) or ["DEFAULT-FACTORY"]
+
+
+# ---------------------------------------------------------- preset pipelines
+CONTENT_PRESETS = {
+    "📰 Daily Tech Short": {
+        "topic": "Top 3 AI tools nobody is talking about yet",
+        "tone": "Tech Review", "length": 45,
+        "platforms": ["YouTube Shorts", "TikTok", "Instagram Reels"],
+        "profile": "ALEX-TECH"},
+    "🎮 Gaming Highlight": {
+        "topic": "Insane clutch play breakdown — frame by frame",
+        "tone": "Hype / Viral", "length": 30,
+        "platforms": ["TikTok", "YouTube Shorts"],
+        "profile": "MIA-GAMING"},
+    "📈 Market Brief": {
+        "topic": "60-second macro brief: what moved the market today",
+        "tone": "Educational", "length": 60,
+        "platforms": ["YouTube Shorts", "X (Twitter)"],
+        "profile": "LEON-FINANCE"},
+    "🌸 Aesthetic Reel": {
+        "topic": "Slow-morning routine — cinematic b-roll edit",
+        "tone": "Dark / Cinematic", "length": 25,
+        "platforms": ["Instagram Reels", "TikTok"],
+        "profile": "SARA-LIFESTYLE"},
+    "🧠 Tutorial Snippet": {
+        "topic": "Automate your VPS in 3 commands — full walkthrough",
+        "tone": "Educational", "length": 90,
+        "platforms": ["YouTube Shorts", "TikTok", "Instagram Reels"],
+        "profile": "ALEX-TECH"},
+}
+
+
+def apply_preset(name):
+    p = CONTENT_PRESETS.get(name)
+    if not p:
+        return (gr.skip(),) * 5
+    return p["topic"], p["tone"], p["length"], p["platforms"], p["profile"]
 
 
 # ------------------------------------------------------------------ wizard
@@ -130,6 +168,8 @@ def render() -> dict:
     with gr.Row():
         with gr.Column(scale=5):
             gr.Markdown("#### 🏭 SHORT FACTORY WIZARD")
+            preset = gr.Dropdown(list(CONTENT_PRESETS.keys()),
+                                  label="⚡ PRE-CONFIGURED PIPELINE (fills everything)")
             topic = gr.Textbox(label="TOPIC / BRIEF",
                                 placeholder="e.g. '5 Ollama tricks nobody knows'")
             with gr.Row():
@@ -148,14 +188,14 @@ def render() -> dict:
             job_id = gr.Textbox(label="ACTIVE JOB ID", value="—")
             wizard_status = gr.Markdown("_factory idle_")
 
-            gr.Markdown("#### ⚙️ MANUAL STAGE CONTROLS")
-            with gr.Row():
+            gr.Markdown("#### ⚙️ STAGE CONTROLS")
+            with gr.Row() as stage_row:
                 s1 = gr.Button("✍️ 1. SCRIPT", variant="secondary")
                 s2 = gr.Button("📦 2. ASSETS", variant="secondary")
                 s3 = gr.Button("🎙️ 3. VOICEOVER", variant="secondary")
-            with gr.Row():
-                s4 = gr.Button("🎬 4. RENDER (FFMPEG)", variant="secondary")
-                s5 = gr.Button("🚀 5. DISTRIBUTE", variant="primary")
+                s4 = gr.Button("🎬 4. RENDER", variant="secondary")
+                s5 = gr.Button("🚀 5. POST", variant="primary")
+            vis.register("content.stages", stage_row, "Content: manual stage buttons")
             script_box = gr.Code(language=None, lines=10, label="SCRIPT OUTPUT",
                                   elem_classes="term-screen")
         with gr.Column(scale=5):
@@ -188,6 +228,8 @@ def render() -> dict:
                                                   "PROFILE", "STAGE"])
 
     # ---------------------------------------------------------------- events
+    preset.change(apply_preset, inputs=[preset],
+                  outputs=[topic, tone, length, platforms, profile])
     create_btn.click(create_job, inputs=[topic, tone, length, platforms, profile],
                      outputs=[wizard_status, job_id, queue_table])
     auto_btn.click(autopilot, inputs=[topic, tone, length, platforms, profile, voice],

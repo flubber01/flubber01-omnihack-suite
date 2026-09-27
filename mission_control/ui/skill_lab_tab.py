@@ -8,6 +8,7 @@ from ..core import swarm
 from ..core.skills import (SKILL_REGISTRY, domain_counts, execute_skill,
                             search_skills, skill_label)
 from ..core.state import STATE
+from . import visibility as vis
 
 DOMAINS = ["ALL"] + sorted({s["domain"] for s in SKILL_REGISTRY.values()})
 
@@ -97,9 +98,10 @@ def render(ops_table) -> dict:
             search = gr.Textbox(label="🔍 SEARCH SKILLS", placeholder="e.g. ffmpeg, port, seo…")
             domain = gr.Dropdown(DOMAINS, value="ALL", label="DOMAIN FILTER")
             detail = gr.Markdown("_select a skill to inspect_", elem_classes="cyber-panel")
-            with gr.Row():
+            with gr.Row() as test_row:
                 test_btn = gr.Button("🧪 FIRE TEST SHOT", variant="secondary")
-            test_out = gr.Markdown("")
+                test_out = gr.Markdown("")
+            vis.register("skilllab.testfire", test_row, "Skill Lab: test-shot row")
         with gr.Column(scale=5):
             gr.Markdown("#### SKILL RACK — tick any number of skills")
             first_ids = search_skills("", "ALL")[:24]

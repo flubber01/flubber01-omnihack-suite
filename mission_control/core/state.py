@@ -122,7 +122,14 @@ class SwarmState:
         self.workflows: Dict[str, Dict[str, Any]] = {}
         self.github_cfg: Dict[str, str] = {}
         self.azure_cfg: Dict[str, str] = {}
+        self.brand_connectors: Dict[str, Dict[str, str]] = {}
+        self.telegram_cfg: Dict[str, Any] = {"token": "", "allowed": "",
+                                              "running": False, "bot_name": ""}
         self.pipeline_runs: List[Dict[str, Any]] = []
+
+        # UI configuration ------------------------------------------------------
+        self.skin: str = "JARVIS"
+        self.ui_flags: Dict[str, bool] = {}
 
         # hardware ----------------------------------------------------------------
         self.hardware: Dict[str, Dict[str, Any]] = {}
@@ -220,7 +227,7 @@ STATE = SwarmState()
 
 
 def seed_static_data() -> None:
-    """Populate hardware + docker fixtures once at boot."""
+    """Populate hardware, docker, personas + preset pipelines once at boot."""
     if STATE.hardware:
         return
     STATE.hardware = {
@@ -246,3 +253,75 @@ def seed_static_data() -> None:
         {"name": "omni-vector-db", "image": "qdrant/qdrant:v1.14", "status": "exited", "cpu": "0%", "mem": "0B"},
     ]
     STATE.log("INFO", "HARDWARE-HUB", "Hardware matrix initialised :: 6 devices, 6 containers registered.")
+    _seed_personas()
+    _seed_preset_workflows()
+
+
+def _seed_personas() -> None:
+    """Four static social personas (placeholder accounts for 4 users)."""
+    personas = {
+        "ALEX-TECH": {
+            "mode": "STATIC / ALWAYS-ON", "desc": "Tech Guru — AI news, tool reviews.",
+            "accounts": {"Twitter (X)": "@alex_tech_daily", "YouTube": "AlexTechLabs",
+                          "TikTok": "@alex.tech", "Instagram": "@alex_tech_daily",
+                          "GitHub": "alex-tech"},
+        },
+        "MIA-GAMING": {
+            "mode": "STATIC / ALWAYS-ON", "desc": "Gaming — highlights, clips, memes.",
+            "accounts": {"YouTube": "MiaPlaysHQ", "TikTok": "@mia.clips",
+                          "Instagram": "@mia_plays", "Facebook": "MiaPlaysHQ"},
+        },
+        "LEON-FINANCE": {
+            "mode": "ON-DEMAND", "desc": "Finance — market briefs, data viz.",
+            "accounts": {"Twitter (X)": "@leon_macro", "YouTube": "LeonMacro",
+                          "LinkedIn": "leon-macro"},
+        },
+        "SARA-LIFESTYLE": {
+            "mode": "ON-DEMAND", "desc": "Lifestyle — vlogs, aesthetic reels.",
+            "accounts": {"Instagram": "@sara.vibes", "TikTok": "@sara.vibes",
+                          "Spotify": "sara-curates", "Pinterest": "saravibes"},
+        },
+    }
+    for name, cfg in personas.items():
+        STATE.profiles.setdefault(name, cfg)
+    STATE.log("INFO", "PROFILES", "Seeded 4 static personas :: ALEX / MIA / LEON / SARA.")
+
+
+def _seed_preset_workflows() -> None:
+    """Pre-configured content-automation + integration pipelines."""
+    presets = {
+        "auto-short-factory": {
+            "steps": ["🧠 Run Commander Review :: brief=topic-of-day",
+                       "🎬 Render Short Video :: profile=ALEX-TECH 9:16",
+                       "📸 Post via Instagram Connector :: persona=ALEX-TECH",
+                       "🎥 Post via YouTube Connector :: persona=ALEX-TECH",
+                       "🎵 Post via TikTok Connector :: persona=ALEX-TECH",
+                       "🗄️ Persist Artifacts to NAS :: path=/render/shorts"],
+            "running": False,
+        },
+        "github-trend-digest": {
+            "steps": ["🐙 Fetch GitHub Repo :: repo=trending",
+                       "🕷️ Spawn Underclass Scraper :: depth=2",
+                       "✉️ Publish via Gmail Connector :: digest=true",
+                       "🔀 Relay to n8n :: webhook=trend-digest"],
+            "running": False,
+        },
+        "kaggle-data-drop": {
+            "steps": ["📊 Kaggle Dataset Pull :: dataset=daily-metrics",
+                       "🧮 Run Skill Lab Capability Check :: domain=Data Science",
+                       "🎬 Render Short Video :: chart-visualisation",
+                       "📨 Send Slack/Discord Alert :: channel=#data"],
+            "running": False,
+        },
+        "social-crosspost-loop": {
+            "steps": ["🌐 Execute Browser-Use Task :: login=stored-cookies",
+                       "📸 Post via Instagram Connector :: persona=SARA-LIFESTYLE",
+                       "🎵 Post via TikTok Connector :: persona=MIA-GAMING",
+                       "🎥 Post via YouTube Connector :: persona=ALEX-TECH",
+                       "☁️ Trigger Azure Pipeline :: notify=ops"],
+            "running": False,
+        },
+    }
+    for name, cfg in presets.items():
+        STATE.workflows.setdefault(name, cfg)
+    STATE.log("INFO", "WORKFLOW", f"Pre-configured {len(presets)} pipelines.")

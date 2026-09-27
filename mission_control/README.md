@@ -1,58 +1,85 @@
-# 🛰️ OMNIHACK // MISSION CONTROL
+# 🛰️ OMNIHACK // MISSION CONTROL v2.0
 
 **Maxed-Out Agentic Swarm Mission Control Center & Automated Social Media Factory
 with Live Remote Browser Streaming.**
 
-A production-grade Gradio 6 command deck: cyberpunk/military dark UI, hierarchical
-agent swarm, universal Ollama + HuggingFace engine, live remote browser with
-click-to-steal coordinate injection, a 202-skill lab, embedded SSH terminal,
-workflow builder with GitHub/Azure connectors, hardware hub and a global
-emergency kill switch. Every external integration ships with a deterministic
-simulated backend so the app runs natively with zero credentials.
+Cyberpunk command deck on Gradio 6: hierarchical agent swarm, universal
+Ollama + HuggingFace engine, live remote browser, 202-skill lab, embedded SSH
+terminal, workflow builder with 10+ brand connectors, hardware hub, Telegram
+remote control, 3 switchable HUD skins and a global emergency kill switch.
+Every external integration ships with a deterministic simulated backend — the
+app runs natively with zero credentials.
 
-## 🚀 Run
+## 🚀 One-shot install (single bash command)
 
 ```bash
-pip install -r requirements.txt
-python run_mission_control.py          # → http://0.0.0.0:7860
-OMNI_PORT=8080 python run_mission_control.py   # custom port
+# inside a clone:
+bash install.sh
+
+# fully remote (clones the repo for you):
+bash <(curl -fsSL https://raw.githubusercontent.com/flubber01/flubber01-omnihack-suite/arena/01a0e419-flubber01-omnihack-suite/install.sh)
 ```
 
-## 🗺️ Tabs
+Manual: `pip install -r requirements.txt && python run_mission_control.py`
+
+## 🖥️ Multi-Screen Mode (2 monitors)
+
+One server, three views — open two of them and drag one to your second display:
+
+| URL | Screen | Content |
+|-----|--------|---------|
+| `/` | Full console | all tabs + settings |
+| `/ops` | **Operator console** | swarm chat + agent terminal, live browser, content factory |
+| `/wall` | **Monitor wall** | telemetry, ops matrix, log stream, hardware, browser peek (read-only) |
+
+## 🗺️ Tabs (main console)
 
 | Tab | Capability |
 |-----|-----------|
-| 🛸 Swarm Live Operations | Streaming multi-agent chatbox (broadcast or targeted), live ops matrix, halt/resume per agent, ping-all |
-| 🤖 Hierarchical Agent Configurator | Commanders ➔ minions tree, fully editable system prompts, model binding, **Define AI's Job** intent compiler |
-| ⚡ Ollama + HF Engine | `/api/tags` scanner, native pulls, **`hf.co/Org/Repo-GGUF` pulls**, local `.gguf` scan ➔ Modelfile builder, instant bind-to-agent |
-| 🌐 LIVE BROWSER STREAM | Pillow-rendered stealth viewport @ N fps, click-capture overlay → coordinate injection, keyboard/scroll/goto, DOM dump, **Ollama vision/control bridge (inspect + autopilot)**, noVNC iframe fallback |
-| 🎬 Content Automation & Planner | Wizard (script ➔ assets ➔ TTS ➔ FFmpeg render ➔ multi-platform distribute), one-click autopilot, cron-style planner |
-| 📡 Social Connectors & Profiles | API/OAuth/webhook vaults for X, YouTube, TikTok, Spotify, Instagram, Facebook · multi-persona profile matrix · static/on-demand daemons |
-| 🔬 Skill Lab | **202 stubbed skills** across 6 domains, fuzzy search, fuse/strip onto any agent, test-fire receipts |
-| 💻 Direct SSH Terminal | paramiko interactive shell (blank host → local sandbox), quick-ops, streaming output |
-| 🗺️ Workflow Builder | Node sequencer with live execution log, GitHub + Azure DevOps connectors, **config.json export/import** |
-| 🔌 Hardware Hub | GPU rigs / edge cluster / NAS matrix, load & power telemetry, docker fleet control |
-| 📊 System Logs | 2000-event ring buffer, level filtering, auto-refresh |
+| 🛸 Swarm Live Operations | streaming multi-agent chatbox, live ops matrix, **AGENT DIRECT TERMINAL** (`/help`, `/say`, `/status`, `/kill` …) |
+| 🤖 Agent Configurator | commander➔minion tree, editable system prompts, model binding, **Define AI's Job** intent compiler |
+| ⚡ Ollama + HF Engine | `/api/tags` scanner, **hf.co/Org/Repo-GGUF** pulls, local GGUF ➔ Modelfile, instant bind |
+| 🌐 Live Browser Stream | stealth viewport, click-capture ➔ coordinate injection, DOM dump, **Ollama autopilot**, noVNC fallback |
+| 🎬 Content Automation | wizard + **5 pre-configured pipeline presets**, one-click autopilot, planner |
+| 📡 Social Connectors | X/YouTube/TikTok/Spotify/Instagram/Facebook vaults · **4 seeded personas** (ALEX/MIA/LEON/SARA) · daemons |
+| 🔬 Skill Lab | 202 stubbed skills, fuzzy search, fuse/strip onto agents |
+| 💻 SSH Terminal | paramiko shell (blank host → sandbox), quick-ops |
+| 🗺️ Workflows & Connectors | node sequencer, GitHub + Azure, **n8n · Kaggle · Gmail · Slack · Discord · Notion · OpenAI · Zapier · HuggingFace · Stripe**, 4 shipped blueprint pipelines |
+| 🔌 Hardware Hub | GPU/edge/NAS matrix, docker fleet, power telemetry |
+| 📊 System Logs | 2000-event ring buffer, level filter |
+| ⚙️ Settings & Config | **3 HUD skins**, **UI cleanup toggles** (hide unused controls), **Telegram bridge**, config.json export/import |
+
+## 🎨 HUD skins (live-switchable)
+
+* **JARVIS** — holographic Stark HUD, cyan/gold (default)
+* **CYBERPUNK** — matrix green/magenta
+* **MILITARY OPS** — olive/amber stencil console
+
+## 📱 Telegram control
+
+Settings ▸ Telegram: paste your **@BotFather** token, optionally whitelist
+chat ids, hit ARM. Then from your phone:
+
+```
+/status  /agents  /kill  /resume  /ping
+/short <topic>           → full content autopilot
+/say <AGENT> <msg>       → direct-talk any agent
+/skin <name>             → swap HUD style
+```
 
 ## ⛔ Fail-safes
 
-* **EMERGENCY KILL SWITCH** (top bar) freezes every agent, browser task, render
-  loop and workflow instantly; **RE-ARM** restores the swarm.
+* **EMERGENCY KILL SWITCH** (top bar + `/kill` + Telegram `/kill`) freezes
+  every agent, browser task, render loop and workflow instantly.
 * SSH sandbox blocks destructive patterns; credentials are never persisted.
 
 ## 🧱 Architecture
 
 ```
 mission_control/
-├── app.py                 # Blocks assembly, timers, kill-switch wiring
-├── core/                  # engines (state, swarm, ollama, browser, ssh,
-│                          #          pipeline, skills, persistence, theme)
-├── ui/                    # one module per tab (topbar + 10 tabs)
-└── data/                  # runtime vaults: config.json, connectors.json,
-                           # profiles.json (git-ignored)
+├── app.py                  # FastAPI host: / + /ops + /wall (uvicorn)
+├── core/                   # state, swarm, ollama, browser, ssh, pipeline,
+│                           # skills, persistence, telegram_bridge, theme
+├── ui/                     # topbar + 11 tabs + screens.py (multi-monitor)
+└── data/                   # runtime vaults (git-ignored)
 ```
-
-All backend seams (`OllamaEngine`, `BrowserInstance`, `SSHBridge`,
-`ContentPipeline`, `SKILL_REGISTRY`) are drop-in points: attach a real Ollama
-daemon, Playwright/browser-use, or platform APIs and the UI keeps working
-unchanged.
