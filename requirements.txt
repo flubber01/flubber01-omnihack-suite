@@ -1,0 +1,7 @@
+gradio>=6.20
+pillow>=10.0
+requests>=2.31
+paramiko>=3.4
+psutil>=5.9
+fastapi>=0.110
+uvicorn>=0.29
